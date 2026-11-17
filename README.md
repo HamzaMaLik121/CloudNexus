@@ -4,8 +4,8 @@ Team CloudNexus: ShipIt Sprint.
 
 | Member | GitHub username | Role |
 |--------|-----------------|------|
-| Hamza  |                 | Team Lead |
-| Saqib  |                 |  |
+| Hamza  |                 |  |
+| Saqib  |                 | TeamLead |
 | Sameer |                 |  |
 | Asad   |                 |  |
 
