@@ -1,0 +1,42 @@
+:root {
+  --ink: #14263b;
+  --paper: #f7f8fa;
+  --sea: #1f5f8b;
+  --buoy: #f2b705;
+  --line: #d5dce4;
+  --card: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eef5;
+    --paper: #0f1b29;
+    --sea: #7fb7e0;
+    --buoy: #f2b705;
+    --line: #2b3d52;
+    --card: #162636;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+a { color: var(--sea); }
+a:focus-visible { outline: 3px solid var(--buoy); outline-offset: 2px; }
+header, main, footer { max-width: 860px; margin: 0 auto; padding: 0 1.25rem; }
+header { padding-top: 3rem; padding-bottom: 1.5rem; border-bottom: 4px solid var(--buoy); }
+h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1.1; margin: 0 0 .5rem; }
+h2 { font-family: Georgia, "Times New Roman", serif; margin-top: 2.5rem; }
+.lead { font-size: 1.15rem; max-width: 60ch; margin: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; padding: 0; list-style: none; }
+.card { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--sea); padding: 1rem 1.1rem; }
+.card h3 { margin: 0 0 .25rem; }
+.card p { margin: 0 0 .5rem; }
+.profile dt { font-weight: 700; margin-top: 1rem; }
+.profile dd { margin: 0; }
+footer { margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 2.5rem; border-top: 1px solid var(--line); font-size: .95rem; }
+.motto { font-style: italic; }
+.version { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85rem; opacity: .8; }
