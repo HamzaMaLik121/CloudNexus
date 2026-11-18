@@ -114,3 +114,22 @@ find "$RELEASES_DIR" -mindepth 1 -maxdepth 1 -type d \
 echo "Deployment successful!"
 echo "Active release: $RELEASE_DIR"
 
+
+
+# Install deploy user's cron jobs
+DEPLOY_CRON=$(mktemp)
+
+(crontab -u deploy -l 2>/dev/null || true) |
+    grep -Fv "/var/www/cloudnexus/bin/status.sh" |
+    grep -Fv "/var/www/cloudnexus/bin/traffic-report.sh" \
+    > "$DEPLOY_CRON" || true
+
+printf '%s\n' \
+    '* * * * * /var/www/cloudnexus/bin/status.sh' \
+    '*/5 * * * * /var/www/cloudnexus/bin/traffic-report.sh' \
+    >> "$DEPLOY_CRON"
+
+crontab -u deploy "$DEPLOY_CRON"
+rm -f "$DEPLOY_CRON"
+
+echo "Team scripts and deploy cron jobs installed successfully."
