@@ -80,12 +80,16 @@ jobs:
           DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
           COMMIT_SHA: ${{ github.sha }}
         run: |
-          URL="http://${DEPLOY_HOST}.nip.io"
+          DOMAIN="team-cloudnexus.test"
 
-          echo "Checking website: $URL"
+          echo "Checking http://$DOMAIN on $DEPLOY_HOST"
 
           for attempt in {1..5}; do
-            if curl -fsS "$URL" -o /tmp/cloudnexus-live.html; then
+            if curl -fsS \
+              --resolve "$DOMAIN:80:$DEPLOY_HOST" \
+              "http://$DOMAIN/" \
+              -o /tmp/cloudnexus-live.html; then
+
               if grep -q "$COMMIT_SHA" /tmp/cloudnexus-live.html; then
                 echo "Deployment health check passed."
                 exit 0

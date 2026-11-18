@@ -33,7 +33,7 @@ jobs:
             -o BatchMode=yes \
             -o StrictHostKeyChecking=yes \
             deploy@"$DEPLOY_HOST" \
-            "bash /var/www/cloudnexus/staging/scripts/rollback.sh '$ACTOR'"
+            "bash /var/www/cloudnexus/bin/rollback.sh '$ACTOR'"
 
       - name: Notify Slack
         if: always()
