@@ -1,0 +1,61 @@
+
+name: CloudNexus Rollback
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rollback:
+    name: Rollback Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Execute Rollback
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            deploy@"$DEPLOY_HOST" \
+            "bash /var/www/cloudnexus/bin/rollback.sh '$ACTOR'"
+
+      - name: Notify Slack
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ACTOR: ${{ github.actor }}
+          RESULT: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
+            echo "SLACK_WEBHOOK_URL is not configured yet."
+            exit 0
+          fi
+
+          MESSAGE="CloudNexus rollback: ${RESULT}
+          Triggered by: ${ACTOR}
+          Workflow: ${RUN_URL}"
+
+          PAYLOAD="$(jq -n --arg text "$MESSAGE" '{text: $text}')"
+
+          curl -fsS -X POST \
+            -H "Content-Type: application/json" \
+            --data "$PAYLOAD" \
+            "$SLACK_WEBHOOK_URL"
+
