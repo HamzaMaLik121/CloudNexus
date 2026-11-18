@@ -1,37 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ShipIt Sprint: Team CloudNexus</title>
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="CloudNexus brings code, infrastructure, and teamwork together to make every release clearer and easier to operate.">
+  <title>CloudNexus — Build, ship, operate</title>
+  <link rel="preload" href="assets/asadullah.jpeg" as="image" type="image/jpeg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>We build it, we ship it, we run it.</h1>
-    <p class="lead">Team CloudNexus built this site together: one repository, one server, and a deploy on every merge.</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="CloudNexus home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 3.5 35 12v16L20 36.5 5 28V12L20 3.5Z" stroke="currentColor" stroke-width="1.5"/><path d="m11 15 9-5 9 5v10l-9 5-9-5V15Z" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="1.5"/><path d="m15 21 3.2 3.2L25 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Cloud<span>Nexus</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#team">The team</a><a href="#approach">How we work</a><a href="#stack">Technology</a><a href="/live/status.html">Live status</a><a class="nav-cta" href="/live/report.html">Traffic report <span aria-hidden="true">↗</span></a>
+      </nav>
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation menu"><span></span><span></span><span></span></summary>
+        <nav class="mobile-nav-panel" aria-label="Mobile navigation"><a href="#team">The team</a><a href="#approach">How we work</a><a href="#stack">Technology</a><a href="/live/status.html">Live status</a><a href="/live/report.html">Traffic report</a></nav>
+      </details>
+    </div>
   </header>
-
-  <main>
-    <h2>Meet the team</h2>
-    <ul class="cards">
-      <li class="card">
-        <h3>Example Member</h3>
-        <p>Example role</p>
-        <a href="members/example.html">Open page</a>
-      </li>
-    </ul>
-
-    <h2>Live from the server</h2>
-    <p>
-      <a href="/live/status.html">Server status</a> and
-      <a href="/live/report.html">traffic report</a> are written by scripts on the server.
-    </p>
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> TEAM CLOUDNEXUS <span class="eyebrow-divider">/</span> BUILD · SHIP · OPERATE</p>
+        <h1 id="hero-title">Cloud work,<br><span class="gradient-text">with confidence.</span></h1>
+        <p class="hero-lead">We bring code, infrastructure, and teamwork together to make every release clearer, safer, and easier to operate.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#team">Meet the team <span aria-hidden="true">↓</span></a><a class="button button-quiet" href="/live/status.html"><span class="button-status-dot"></span> View live status</a></div>
+        <div class="hero-meta"><span>Four people</span><span class="meta-separator"></span><span>One shared delivery path</span></div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="CloudNexus delivery flow illustration">
+        <div class="visual-glow"></div>
+        <div class="pipeline-card">
+          <div class="pipeline-card-header"><span class="card-kicker">DELIVERY FLOW</span><span class="flow-state"><span></span> READY TO SHIP</span></div>
+          <div class="orbit-stage"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="orbit-node node-top"><span>01</span>Commit</div><div class="orbit-node node-right"><span>02</span>Validate</div><div class="orbit-node node-bottom"><span>03</span>Deploy</div><div class="orbit-node node-left"><span>04</span>Observe</div>
+            <div class="orbit-center"><span class="mini-brand-mark">CN</span><span>Reliable<br>delivery</span></div><span class="orbit-spark spark-a"></span><span class="orbit-spark spark-b"></span>
+          </div>
+          <div class="pipeline-footer"><span><i class="footer-line line-blue"></i>automation</span><span><i class="footer-line line-purple"></i>operations</span><span><i class="footer-line line-mint"></i>visibility</span></div>
+        </div>
+        <div class="floating-note note-top"><span class="note-icon icon-check">✓</span><span><b>Validated</b><small>Change reviewed</small></span></div>
+        <div class="floating-note note-bottom"><span class="note-icon icon-wave">↗</span><span><b>Release ready</b><small>Small steps, steady delivery</small></span></div>
+      </div>
+    </section>
+    <section class="signal-strip" aria-label="CloudNexus focus areas"><div class="container signal-inner"><p>ONE TEAM, CONNECTED BY</p><div class="signal-item"><span class="signal-icon">⌘</span>Automation</div><div class="signal-item"><span class="signal-icon">⌁</span>Infrastructure</div><div class="signal-item"><span class="signal-icon">◉</span>Observability</div><div class="signal-item"><span class="signal-icon">↗</span>Collaboration</div></div></section>
+    <section class="section container" id="team" aria-labelledby="team-title">
+      <div class="section-heading"><div><p class="eyebrow section-eyebrow">THE PEOPLE BEHIND THE PIPELINE</p><h2 id="team-title">Small team. <span class="gradient-text">Shared ownership.</span></h2></div><p>Different specialties, one dependable path from a change in code to a service we can see and support.</p></div>
+      <div class="team-grid">
+        <article class="team-card team-card-featured"><div class="team-card-top"><span class="member-index">01 / DELIVERY</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="member-identity"><img class="member-photo" src="assets/asadullah.jpeg" alt="Portrait of Asadullah" width="96" height="96"><div><h3>Asadullah</h3><p class="member-role">Pipeline Engineer</p></div></div><p class="member-summary">Connects code changes to reliable releases with CI/CD automation and secure SSH deployment.</p><div class="skill-list" aria-label="Skills"><span>GitHub Actions</span><span>CI/CD</span><span>SSH</span></div><a class="card-link" href="members/asadullah.html">Explore profile <span aria-hidden="true">→</span></a></article>
+        <article class="team-card"><div class="team-card-top"><span class="member-index">02 / INFRASTRUCTURE</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="member-identity"><span class="member-avatar avatar-blue" aria-hidden="true">H</span><div><h3>Hamza</h3><p class="member-role">Server Admin</p></div></div><p class="member-summary">Keeps the Ubuntu environment, access, and web-server configuration dependable.</p><div class="skill-list" aria-label="Skills"><span>Ubuntu</span><span>Nginx</span><span>Linux security</span></div><a class="card-link" href="members/hamza.html">Explore profile <span aria-hidden="true">→</span></a></article>
+        <article class="team-card"><div class="team-card-top"><span class="member-index">03 / AUTOMATION</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="member-identity"><span class="member-avatar avatar-violet" aria-hidden="true">S</span><div><h3>Sameer</h3><p class="member-role">Scripter</p></div></div><p class="member-summary">Turns repeatable server tasks into clear Bash scripts and practical monitoring.</p><div class="skill-list" aria-label="Skills"><span>Bash</span><span>Monitoring</span><span>Cron</span></div><a class="card-link" href="members/sameer.html">Explore profile <span aria-hidden="true">→</span></a></article>
+        <article class="team-card"><div class="team-card-top"><span class="member-index">04 / COORDINATION</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="member-identity"><span class="member-avatar avatar-mint" aria-hidden="true">SQ</span><div><h3>Saqib Querish</h3><p class="member-role">Team Lead</p></div></div><p class="member-summary">Coordinates the work and keeps collaboration, reviews, and project tasks moving.</p><div class="skill-list" aria-label="Skills"><span>Team coordination</span><span>GitHub</span><span>Jira</span></div><a class="card-link" href="members/saqib-querish.html">Explore profile <span aria-hidden="true">→</span></a></article>
+      </div>
+    </section>
+    <section class="section approach-section" id="approach" aria-labelledby="approach-title"><div class="container"><div class="section-heading"><div><p class="eyebrow section-eyebrow">FROM CHANGE TO CONFIDENCE</p><h2 id="approach-title">A clear path to <span class="gradient-text">production.</span></h2></div><p>We pair automation with visibility, so the team can understand what changed and what is happening after release.</p></div>
+      <div class="approach-grid"><article class="approach-card"><span class="approach-number">01</span><div class="approach-icon icon-blue">⌘</div><h3>Validate</h3><p>Check the website and scripts before changes move toward production.</p><span class="approach-label">CI · QUALITY</span></article><article class="approach-card"><span class="approach-number">02</span><div class="approach-icon icon-purple">⇧</div><h3>Release</h3><p>Stage a release, validate it, then switch the active version safely.</p><span class="approach-label">DELIVERY · ROLLBACK</span></article><article class="approach-card"><span class="approach-number">03</span><div class="approach-icon icon-mint">◉</div><h3>Observe</h3><p>Track service status and traffic with simple, practical monitoring.</p><span class="approach-label">STATUS · TRAFFIC</span></article></div>
+    </div></section>
+    <section class="section container" id="stack" aria-labelledby="stack-title"><div class="section-heading"><div><p class="eyebrow section-eyebrow">TOOLS THAT KEEP IT SIMPLE</p><h2 id="stack-title">Built with a <span class="gradient-text">focused stack.</span></h2></div><p>Lightweight tools that make the delivery path understandable and maintainable.</p></div><div class="stack-grid"><div class="stack-item"><span class="stack-glyph glyph-html">&lt;/&gt;</span><div><h3>Static web</h3><p>HTML · CSS</p></div></div><div class="stack-item"><span class="stack-glyph glyph-actions">⌘</span><div><h3>Automation</h3><p>GitHub Actions</p></div></div><div class="stack-item"><span class="stack-glyph glyph-linux">$_</span><div><h3>Server</h3><p>Ubuntu · Nginx</p></div></div><div class="stack-item"><span class="stack-glyph glyph-bash">&gt;_</span><div><h3>Operations</h3><p>Bash · Cron</p></div></div></div></section>
+    <section class="live-section" aria-labelledby="live-title"><div class="container live-inner"><div class="live-copy"><p class="eyebrow">OPERATIONS, IN VIEW</p><h2 id="live-title">See how the service is doing.</h2><p>Explore the live server status or review traffic activity from the deployed site.</p></div><div class="live-actions"><a class="button button-primary" href="/live/status.html">Open status <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/live/report.html">View traffic report <span aria-hidden="true">↗</span></a></div></div></section>
   </main>
-
-  <footer>
-    <p class="motto">Team motto: Ship small, ship often.</p>
-    <p class="version">Deployed: __VERSION__</p>
-  </footer>
+  <footer class="site-footer"><div class="container footer-main"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 3.5 35 12v16L20 36.5 5 28V12L20 3.5Z" stroke="currentColor" stroke-width="1.5"/><path d="m11 15 9-5 9 5v10l-9 5-9-5V15Z" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="1.5"/><path d="m15 21 3.2 3.2L25 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Cloud<span>Nexus</span></span></a><p>We build it, we ship it, we run it.</p><a class="back-top" href="#main">Back to top ↑</a></div><div class="container footer-bottom"><span>© CloudNexus team</span><span class="version">Deployed: __VERSION__</span></div></footer>
 </body>
 </html>
