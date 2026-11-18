@@ -1,0 +1,101 @@
+
+name: CloudNexus Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+concurrency:
+  group: cloudnexus-production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Cloud Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.UBUNTU_DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Package Website
+        run: |
+          tar -czf /tmp/cloudnexus-deploy.tar.gz site scripts
+
+      - name: Upload Website to Cloud Server
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            /tmp/cloudnexus-deploy.tar.gz \
+            ubuntu@"$DEPLOY_HOST":/tmp/cloudnexus-deploy.tar.gz
+
+      - name: Prepare Server Staging
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            ubuntu@"$DEPLOY_HOST" \
+            'sudo rm -rf /var/www/cloudnexus/staging/site /var/www/cloudnexus/staging/scripts &&
+             sudo mkdir -p /var/www/cloudnexus/staging &&
+             sudo tar -xzf /tmp/cloudnexus-deploy.tar.gz -C /var/www/cloudnexus/staging &&
+             sudo chown -R ubuntu:ubuntu /var/www/cloudnexus/staging &&
+             chmod +x /var/www/cloudnexus/staging/scripts/*.sh &&
+             rm -f /tmp/cloudnexus-deploy.tar.gz'
+
+      - name: Execute Deployment
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            ubuntu@"$DEPLOY_HOST" \
+            "sudo bash /var/www/cloudnexus/staging/scripts/deploy.sh $COMMIT_SHA"
+
+      - name: Verify Live Website
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          URL="http://${DEPLOY_HOST}.nip.io"
+
+          echo "Checking website: $URL"
+
+          for attempt in {1..5}; do
+            if curl -fsS "$URL" -o /tmp/cloudnexus-live.html; then
+              if grep -q "$COMMIT_SHA" /tmp/cloudnexus-live.html; then
+                echo "Deployment health check passed."
+                exit 0
+              fi
+            fi
+
+            echo "Attempt $attempt failed. Retrying..."
+            sleep 5
+          done
+
+          echo "ERROR: Website health check failed."
+          exit 1
+
